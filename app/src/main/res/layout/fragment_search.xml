@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="ButtonStates"
+            name="buttonState"
             type="com.mozilla.clipsearcher.model.ButtonStates" />
 
         <variable
@@ -35,14 +35,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:enabled="@{viewModel.searchButtonState}"
+            android:enabled="@{viewModel.enableButton}"
             android:text="@string/search"
+            android:onClick="@{() -> viewModel.onSearchButtonClick()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/eSearch" />
+            app:layout_constraintTop_toBottomOf="@id/eSearch"
+            tools:enabled="false" />
 
-<!--        android:clickable="@{(viewModel.searchButtonState == ButtonStates.ENABLED)}"-->
-<!--        android:enabled="@{(viewModel.searchButtonState == ButtonStates.ENABLED)}"-->
+        <!--        android:clickable="@{(viewModel.searchButtonState == ButtonStates.ENABLED)}"-->
+        <!--        android:enabled="@{(viewModel.searchButtonState == ButtonStates.ENABLED)}"-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
