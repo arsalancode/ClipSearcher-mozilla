@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.mozilla.clipsearcher.SearchViewModel
+import com.mozilla.clipsearcher.vm.SearchViewModel
 import com.mozilla.clipsearcher.databinding.FragmentSearchBinding
 import com.mozilla.clipsearcher.utils.getData
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,12 +43,16 @@ class SearchFragment : Fragment() {
 
         setupTextChangeListener()
         observeShowResult()
+    }
+
+    override fun onResume() {
+        super.onResume()
         copyClipData()
     }
 
-    private fun copyClipData(){
+    private fun copyClipData() {
         val text = clipboard.getData()
-        if(text.trim().isNotEmpty()){
+        if(text.isNotEmpty()){
             eSearch.setText(text)
         }
     }
@@ -62,7 +66,6 @@ class SearchFragment : Fragment() {
                 findNavController().navigate(action)
             }
         }
-
     }
 
     private fun setupTextChangeListener() {

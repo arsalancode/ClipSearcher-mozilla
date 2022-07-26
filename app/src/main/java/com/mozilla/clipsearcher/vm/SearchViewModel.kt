@@ -1,4 +1,4 @@
-package com.mozilla.clipsearcher
+package com.mozilla.clipsearcher.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +10,7 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @FlowPreview
 @HiltViewModel
-class SearchViewModel @Inject constructor()  : ViewModel() {
+class SearchViewModel @Inject constructor() : ViewModel() {
 
     private val TAG = "SearchViewModel"
     var enableButton = MutableLiveData(false)
@@ -19,20 +19,19 @@ class SearchViewModel @Inject constructor()  : ViewModel() {
     var showResults = MutableLiveData(false)
 
 
-    fun getSearchText() : String = searchTerm
+    fun getSearchText(): String = searchTerm
 
     fun resultsDisplayed() {
         showResults.value = false
     }
 
-    fun afterTextChanged(text: String){
+    fun afterTextChanged(text: String) {
         enableButton.postValue(text.trim().isNotEmpty())
         searchTerm = text.trim()
     }
 
-    fun onSearchButtonClick(){
-        // Open WebView
+    fun onSearchButtonClick() {
+        // TODO: trim query length if too long
         showResults.postValue(true)
     }
-
 }
