@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.mozilla.clipsearcher.HomeViewModel" />
+            type="com.mozilla.clipsearcher.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

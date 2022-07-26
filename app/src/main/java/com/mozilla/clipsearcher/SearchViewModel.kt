@@ -8,11 +8,13 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @FlowPreview
 @HiltViewModel
-class HomeViewModel @Inject constructor()  : ViewModel() {
+class SearchViewModel @Inject constructor()  : ViewModel() {
 
     private val TAG = "HomeViewModel"
     var enableButton = MutableLiveData(false)
     var searchTerm = ""
+
+    var searchQuery = MutableLiveData("")
 
     init {
     }
@@ -24,6 +26,7 @@ class HomeViewModel @Inject constructor()  : ViewModel() {
 
     fun onSearchButtonClick(){
         // Open WebView
+        searchQuery.postValue(searchTerm)
     }
 
 }

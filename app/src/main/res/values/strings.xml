@@ -3,6 +3,8 @@
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="search_fragment_label">Search Fragment</string>
+    <string name="webview_fragment_label">WebView Fragment</string>
+
     <string name="search">Search</string>
     <string name="previous">Previous</string>
 </resources>

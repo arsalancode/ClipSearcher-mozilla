@@ -7,8 +7,36 @@
 
     <fragment
         android:id="@+id/SearchFragment"
-        android:name="com.mozilla.clipsearcher.SearchFragment"
+        android:name="com.mozilla.clipsearcher.ui.SearchFragment"
         android:label="@string/search_fragment_label"
         tools:layout="@layout/fragment_search">
+
+        <argument
+            android:name="query"
+            app:argType="string"
+            app:nullable="true" />
+
+
+        <action
+            android:id="@+id/action_SearchFragment_to_WebViewFragment"
+            app:destination="@id/WebViewFragment" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/WebViewFragment"
+        android:name="com.mozilla.clipsearcher.ui.SearchResultsFragment"
+        android:label="@string/webview_fragment_label"
+        tools:layout="@layout/fragment_webview">
+
+        <argument
+            android:name="query"
+            app:argType="string"
+            app:nullable="true" />
+
+        <action
+            android:id="@+id/action_WebViewFragment_to_SearchFragment"
+            app:destination="@id/SearchFragment" />
+    </fragment>
+
 </navigation>

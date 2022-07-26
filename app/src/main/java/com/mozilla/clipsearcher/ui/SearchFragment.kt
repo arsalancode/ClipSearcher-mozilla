@@ -1,4 +1,4 @@
-package com.mozilla.clipsearcher
+package com.mozilla.clipsearcher.ui
 
 import android.os.Bundle
 import android.text.Editable
@@ -7,8 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.mozilla.clipsearcher.SearchViewModel
 import com.mozilla.clipsearcher.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,14 +21,14 @@ import kotlinx.android.synthetic.main.fragment_search.*
 class SearchFragment : Fragment() {
 
     @ExperimentalCoroutinesApi
-    private val homeViewModel: HomeViewModel by viewModels()
+    private val searchViewModel: SearchViewModel by viewModels()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = FragmentSearchBinding.inflate(inflater, container, false).apply {
-        viewModel = homeViewModel
+        viewModel = searchViewModel
         lifecycleOwner = viewLifecycleOwner
     }.root
 
@@ -35,10 +36,13 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupTextChangeListener()
-//        bSearch.setOnClickListener {
-//            Toast.makeText(requireContext(), "Find Item ", Toast.LENGTH_SHORT).show()
-//        }
 
+        searchViewModel.searchQuery.observe(viewLifecycleOwner) {
+            if(it.isNotEmpty()) {
+                val action = SearchFragmentDirections.actionSearchFragmentToWebViewFragment(it)
+                findNavController().navigate(action)
+            }
+        }
     }
 
     private fun setupTextChangeListener() {
@@ -48,7 +52,7 @@ class SearchFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                homeViewModel.afterTextChanged(s.toString())
+                searchViewModel.afterTextChanged(s.toString())
             }
         })
     }
