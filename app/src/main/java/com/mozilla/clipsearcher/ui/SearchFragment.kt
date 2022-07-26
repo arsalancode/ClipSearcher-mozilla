@@ -10,14 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.mozilla.clipsearcher.vm.SearchViewModel
 import com.mozilla.clipsearcher.databinding.FragmentSearchBinding
 import com.mozilla.clipsearcher.utils.getData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.*
 
 @FlowPreview
 @AndroidEntryPoint
@@ -47,7 +47,11 @@ class SearchFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        copyClipData()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            delay(500)
+            copyClipData()
+        }
     }
 
     private fun copyClipData() {
