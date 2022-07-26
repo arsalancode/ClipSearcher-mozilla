@@ -1,5 +1,7 @@
 package com.mozilla.clipsearcher.ui
 
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.mozilla.clipsearcher.SearchViewModel
 import com.mozilla.clipsearcher.databinding.FragmentSearchBinding
+import com.mozilla.clipsearcher.utils.getData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -22,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_search.*
 class SearchFragment : Fragment() {
 
     private val searchViewModel: SearchViewModel by viewModels()
+    private lateinit var clipboard : ClipboardManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +38,7 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        clipboard = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         setupTextChangeListener()
 
         searchViewModel.showResults.observe(viewLifecycleOwner) {
@@ -43,6 +48,18 @@ class SearchFragment : Fragment() {
                     SearchFragmentDirections.actionSearchFragmentToWebViewFragment(searchViewModel.getSearchText())
                 findNavController().navigate(action)
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        copyClipData()
+    }
+
+    private fun copyClipData(){
+        val text = clipboard.getData()
+        if(text.trim().isNotEmpty()){
+            eSearch.setText(text)
         }
     }
 
@@ -57,4 +74,5 @@ class SearchFragment : Fragment() {
             }
         })
     }
+
 }
