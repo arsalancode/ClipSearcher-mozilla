@@ -18,16 +18,15 @@ import kotlinx.android.synthetic.main.fragment_search.*
 
 @FlowPreview
 @AndroidEntryPoint
+@OptIn(ExperimentalCoroutinesApi::class)
 class SearchFragment : Fragment() {
 
-    @ExperimentalCoroutinesApi
     private val searchViewModel: SearchViewModel by viewModels()
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = FragmentSearchBinding.inflate(inflater, container, false).apply {
+    ): View = FragmentSearchBinding.inflate(inflater, container, false).apply {
         viewModel = searchViewModel
         lifecycleOwner = viewLifecycleOwner
     }.root
@@ -37,9 +36,11 @@ class SearchFragment : Fragment() {
 
         setupTextChangeListener()
 
-        searchViewModel.searchQuery.observe(viewLifecycleOwner) {
-            if(it.isNotEmpty()) {
-                val action = SearchFragmentDirections.actionSearchFragmentToWebViewFragment(it)
+        searchViewModel.showResults.observe(viewLifecycleOwner) {
+            if (it) {
+                searchViewModel.resultsDisplayed()
+                val action =
+                    SearchFragmentDirections.actionSearchFragmentToWebViewFragment(searchViewModel.getSearchText())
                 findNavController().navigate(action)
             }
         }

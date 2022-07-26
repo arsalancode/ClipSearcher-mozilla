@@ -10,13 +10,17 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor()  : ViewModel() {
 
-    private val TAG = "HomeViewModel"
+    private val TAG = "SearchViewModel"
     var enableButton = MutableLiveData(false)
-    var searchTerm = ""
+    private var searchTerm = ""
 
-    var searchQuery = MutableLiveData("")
+    var showResults = MutableLiveData(false)
 
-    init {
+
+    fun getSearchText() : String = searchTerm
+
+    fun resultsDisplayed() {
+        showResults.value = false
     }
 
     fun afterTextChanged(text: String){
@@ -26,7 +30,7 @@ class SearchViewModel @Inject constructor()  : ViewModel() {
 
     fun onSearchButtonClick(){
         // Open WebView
-        searchQuery.postValue(searchTerm)
+        showResults.postValue(true)
     }
 
 }
