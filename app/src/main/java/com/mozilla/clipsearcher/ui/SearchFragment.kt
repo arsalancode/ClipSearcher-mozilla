@@ -18,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.android.synthetic.main.fragment_search.*
+import javax.inject.Inject
 
 @FlowPreview
 @AndroidEntryPoint
@@ -25,7 +26,8 @@ import kotlinx.android.synthetic.main.fragment_search.*
 class SearchFragment : Fragment() {
 
     private val searchViewModel: SearchViewModel by viewModels()
-    private lateinit var clipboard : ClipboardManager
+
+    lateinit var clipboard : ClipboardManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
