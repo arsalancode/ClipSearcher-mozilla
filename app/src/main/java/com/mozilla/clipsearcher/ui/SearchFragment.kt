@@ -5,20 +5,19 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.mozilla.clipsearcher.SearchViewModel
 import com.mozilla.clipsearcher.databinding.FragmentSearchBinding
 import com.mozilla.clipsearcher.utils.getData
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.android.synthetic.main.fragment_search.*
-import javax.inject.Inject
 
 @FlowPreview
 @AndroidEntryPoint
@@ -41,20 +40,9 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         clipboard = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
         setupTextChangeListener()
-
-        searchViewModel.showResults.observe(viewLifecycleOwner) {
-            if (it) {
-                searchViewModel.resultsDisplayed()
-                val action =
-                    SearchFragmentDirections.actionSearchFragmentToWebViewFragment(searchViewModel.getSearchText())
-                findNavController().navigate(action)
-            }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
+        observeShowResult()
         copyClipData()
     }
 
@@ -63,6 +51,18 @@ class SearchFragment : Fragment() {
         if(text.trim().isNotEmpty()){
             eSearch.setText(text)
         }
+    }
+
+    private fun observeShowResult() {
+        searchViewModel.showResults.observe(viewLifecycleOwner) {
+            if (it) {
+                searchViewModel.resultsDisplayed()
+                val action =
+                    SearchFragmentDirections.actionSearchFragmentToWebViewFragment(searchViewModel.getSearchText())
+                findNavController().navigate(action)
+            }
+        }
+
     }
 
     private fun setupTextChangeListener() {
