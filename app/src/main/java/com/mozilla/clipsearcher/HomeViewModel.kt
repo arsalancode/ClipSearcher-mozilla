@@ -1,12 +1,9 @@
 package com.mozilla.clipsearcher
 
-import android.net.ConnectivityManager
-import android.util.Log
 import androidx.lifecycle.*
-import com.github.repos.home.model.UiStates
+import com.mozilla.clipsearcher.model.ButtonStates
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -15,10 +12,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor()  : ViewModel() {
 
     private val TAG = "HomeViewModel"
-
-    var currentPage = 1
-    var loadMoreFlag = false
-    val uiStates = MutableLiveData(UiStates.DISABLE)
+//    val searchButtonState = MutableLiveData(ButtonStates.DISABLED)
+    var searchButtonState = MutableLiveData(false)
 
 //    var repoModelList : List<RepoModel>
 //    val repoUiModelList = MutableLiveData<List<RepoUiModel>>()
