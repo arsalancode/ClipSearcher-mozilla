@@ -11,6 +11,7 @@ import com.mozilla.clipsearcher.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.android.synthetic.main.fragment_search.*
 
 @FlowPreview
 @AndroidEntryPoint
@@ -18,12 +19,6 @@ class SearchFragment : Fragment() {
 
     @ExperimentalCoroutinesApi
     private val homeViewModel: HomeViewModel by viewModels()
-
-//    private var _binding: FragmentSearchBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-//    private val binding get() = _binding!!
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun onCreateView(
@@ -36,15 +31,9 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        bSearch.setOnClickListener {
-//            //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-//            Toast.makeText(requireContext(), "Find Item ", Toast.LENGTH_SHORT).show()
-//
-//        }
+        bSearch.setOnClickListener {
+            Toast.makeText(requireContext(), "Find Item ", Toast.LENGTH_SHORT).show()
+        }
     }
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
 }
